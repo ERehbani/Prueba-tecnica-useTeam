@@ -25,7 +25,6 @@ export default function Home() {
         <Navbar />
         <div className="flex justify-center h-screen bg-[#2a2a2a]">
           <div className="flex flex-col gap-4">
-            {/* spinner/skeleton si querés */}
             <TableStacks isLoading />
           </div>
         </div>
@@ -33,7 +32,7 @@ export default function Home() {
     );
   }
 
-  if (!data?.authenticated) return null; // se está redirigiendo
+  if (!data?.authenticated) return null;
 
   return (
     <>

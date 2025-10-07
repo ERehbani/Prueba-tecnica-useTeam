@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export const runtime = "nodejs";       // fuerza runtime Node (no edge)
-export const dynamic = "force-dynamic"; // evita cacheos extraños en dev
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 function toCSV(tasks: any[]) {
   const headers = ["id","title","description","column","position","responsability","createdAt"];
@@ -34,7 +34,6 @@ export async function POST(req: NextRequest) {
     form.append("email", email);
     form.append("file", blob, `backlog-${new Date().toISOString().slice(0,10)}.csv`);
 
-    // n8n Webhook (PRODUCTION) con Basic Auth exporter:token
     const user = process.env.N8N_BASIC_USER!;
     const pass = process.env.N8N_BASIC_PASS!;
     const auth = "Basic " + Buffer.from(`${user}:${pass}`).toString("base64");
@@ -53,7 +52,6 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// Útil para comprobar existencia de la ruta: debe responder 405
 export async function GET() {
   return NextResponse.json({"message":"GET not allowed"});
 }

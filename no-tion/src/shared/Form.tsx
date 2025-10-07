@@ -1,4 +1,5 @@
 "use client";
+import { useStore } from "@/app/features/kanban/store/taskStore";
 import { getSocket } from "@/shared/lib/socket";
 import { Button } from "@/shared/ui/button";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/shared/ui/dialog";
@@ -9,20 +10,16 @@ import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Spinner } from "./ui/spinner";
-import { useStore } from "@/app/features/kanban/store/taskStore";
 
 const Form = () => {
   const { task, setTask } = useStore();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
-  // conectar 1 vez al abrir el form
   useEffect(() => {
     const s = getSocket();
     const onCreated = (created: any) => {
-      // opcional: logs locales
       console.log("taskCreated (broadcast):", created);
-      // no es necesario setear nada: TableStacks se actualiza con el evento
     };
     s.on("taskCreated", onCreated);
     return () => {
@@ -34,7 +31,6 @@ const Form = () => {
     event.preventDefault();
     setLoading(true);
 
-    // payload desde el store (asegúrate de tener al menos title/columnId)
     const payload = {
       title: task.title?.trim(),
       description: task.description?.trim() ?? "",

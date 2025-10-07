@@ -91,7 +91,6 @@ function SortableItem({
 
     const s = getSocket()
     setSaving(true)
-    // BACKEND: @SubscribeMessage('updateTask') espera { taskId, updatedData }
     s.emit('updateTask', { taskId: task._id, updatedData }, (ack?: { ok: boolean; message?: string }) => {
       setSaving(false)
       if (!ack?.ok) {
@@ -99,7 +98,6 @@ function SortableItem({
         toast.error('No se pudo actualizar la tarea')
         return
       }
-      // El servidor además hará broadcast: server.emit('taskUpdated', updatedTask)
       toast.success('Tarea actualizada')
       setIsEditOpen(false)
     })
@@ -119,7 +117,7 @@ function SortableItem({
       }
     >
       <div className="flex">
-        {/* Detalles */}
+        {/* Task */}
         <Dialog>
           <DialogTrigger className='self-start w-full flex flex-col gap-3 p-2'>
             <div className='flex flex-col gap-3'>
@@ -140,7 +138,7 @@ function SortableItem({
               </div>
             </div>
           </DialogTrigger>
-
+          {/* Detalle del Task */}
           <DialogContent className='bg-[#2a2a2a] border-none text-white'>
             <DialogTitle>Detalles de la tarea</DialogTitle>
             <section className='flex flex-col gap-2'>
@@ -165,6 +163,7 @@ function SortableItem({
 
         {/* Acciones laterales */}
         <div className='flex flex-col items-center gap-1'>
+          {/* Eliminar */}
           <Button
             variant='ghost'
             className='w-6 h-6 p-0 flex items-center rounded-sm hover:bg-white hover:text-black transition-all justify-center'
@@ -182,7 +181,7 @@ function SortableItem({
             >
               <Pencil className='w-4' />
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className='bg-[#2a2a2a] border-none text-white'>
               <DialogTitle>Editar tarea</DialogTitle>
 
               <form onSubmit={handleEditSubmit} className="flex flex-col gap-4">

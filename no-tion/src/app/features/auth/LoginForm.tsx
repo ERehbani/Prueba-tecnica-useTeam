@@ -58,7 +58,6 @@ const LoginForm = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
                         className="w-full border rounded px-3 py-2"
-                        // pattern={PASSWORD_REGEX.source}
                     />
                 </Field>
                 {error && (

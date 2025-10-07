@@ -9,6 +9,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 
+// Componente para exportar vía n8n
 
 const ExportForm = ({ columns }: { columns: ColumnData }) => {
     const [email, setEmail] = useState("");

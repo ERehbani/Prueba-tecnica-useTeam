@@ -11,14 +11,14 @@ export class KanbanController {
   @Post()
   async create (@Body() dto: CreateKanbanDto) {
     const task = await this.kanbanService.createTask(dto)
-    this.gateway.server.emit('taskCreated', task) // <- MUY IMPORTANTE
+    this.gateway.server.emit('taskCreated', task)
     return task
   }
 
   @Delete(':id')
   async remove (@Param('id') id: string) {
     await this.kanbanService.deleteTask(id)
-    this.gateway.server.emit('taskDeleted', { taskId: id }) // <- MUY IMPORTANTE
+    this.gateway.server.emit('taskDeleted', { taskId: id })
     return { ok: true }
   }
 

@@ -52,7 +52,7 @@ export class UserService {
     const passwordValid = await bcrypt.compare(password, user.password);
     if (!passwordValid) throw new UnauthorizedException('Credenciales inválidas');
   
-    // payload correcto con email y sub (id)
+  
     const payload = { email: user.email, sub: user._id };
   
     const token = this.jwtService.sign(payload);

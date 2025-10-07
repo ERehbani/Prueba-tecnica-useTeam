@@ -68,7 +68,7 @@ const TableStacks = ({ isLoading: forceLoading }: Props) => {
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
-  // 0) Asegurar primera carga del hook
+
   useEffect(() => {
     if (!didBootstrapRef.current) {
       didBootstrapRef.current = true;
@@ -76,7 +76,7 @@ const TableStacks = ({ isLoading: forceLoading }: Props) => {
     }
   }, [mutate]);
 
-  // 1) Normalizar datos HTTP
+  // Normalizar datos HTTP
   useEffect(() => {
     const tasks = normalizeTasks(data);
     const grouped: ColumnData = emptyColumns();
@@ -100,7 +100,7 @@ const TableStacks = ({ isLoading: forceLoading }: Props) => {
     setColumns(grouped);
   }, [data]);
 
-  // 2) Conexión y listeners RT (un solo socket compartido)
+  // Conexión y listeners RT (un solo socket compartido)
   useEffect(() => {
     const s = getSocket();
     socketRef.current = s;
@@ -161,7 +161,6 @@ const TableStacks = ({ isLoading: forceLoading }: Props) => {
     s.on("columnReordered", onColumnReordered);
 
     return () => {
-      // NO desconectes el singleton; solo desuscribí
       s.off("taskCreated", onCreated);
       s.off("taskUpdated", onUpdated);
       s.off("taskDeleted", onDeleted);
@@ -195,7 +194,7 @@ const TableStacks = ({ isLoading: forceLoading }: Props) => {
 
     if (!targetColumnId) return;
 
-    // 1) Reordenar dentro de la misma columna
+    // Reordenar dentro de la misma columna
     if (sourceColumnId === targetColumnId) {
       const tasks = [...columns[sourceColumnId]];
       const oldIndex = tasks.findIndex((t) => t._id === draggedId);
@@ -213,7 +212,7 @@ const TableStacks = ({ isLoading: forceLoading }: Props) => {
       return;
     }
 
-    // 2) Mover ENTRE columnas
+    // Mover ENTRE columnas
     const activeTask = columns[sourceColumnId].find((t) => t._id === draggedId);
     if (!activeTask) return;
 

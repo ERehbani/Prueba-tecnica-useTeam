@@ -72,7 +72,7 @@ export class KanbanGateway {
   @SubscribeMessage('deleteTask')
   onDeleteTask (@MessageBody() { taskId }: { taskId: string }) {
     this.kanbanService.deleteTask(taskId)
-    this.server.emit('taskDeleted', { taskId }) // broadcast
+    this.server.emit('taskDeleted', { taskId })
     return { ok: true }
   }
 }

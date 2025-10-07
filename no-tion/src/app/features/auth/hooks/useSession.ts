@@ -1,20 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query'
 
-export type SessionUser = { _id: string; email: string } | null;
-export type SessionResponse = { authenticated: boolean; user: SessionUser };
+export type SessionUser = { _id: string; email: string } | null
+export type SessionResponse = { authenticated: boolean; user: SessionUser }
 
-export function useSession() {
+export function useSession () {
   return useQuery<SessionResponse>({
-    queryKey: ["session"],
+    queryKey: ['session'],
     queryFn: async () => {
-      const res = await fetch("/api/auth/session", { cache: "no-store" });
-      if (!res.ok) throw new Error("No se pudo obtener la sesión");
-      return res.json();
+      const res = await fetch('/api/auth/session', { cache: 'no-store' })
+      if (!res.ok) throw new Error('No se pudo obtener la sesión')
+      return res.json()
     },
-    // opcionales
     retry: false,
     refetchOnMount: 'always',
     refetchOnWindowFocus: false,
-    staleTime: 30_000,
-  });
+    staleTime: 30_000
+  })
 }
