@@ -29,7 +29,6 @@ function SortableItem({
     isDragging
   } = useSortable({ id: task?._id || id || '' })
 
-  const emailRef = useRef<HTMLInputElement>(null)
   const [deleting, setDeleting] = useState(false)
 
   // --- edición ---
@@ -40,6 +39,10 @@ function SortableItem({
   const [responsabilityStr, setResponsabilityStr] = useState(
     (task?.responsability ?? []).join(', ')
   )
+  const [isPressed, setIsPressed] = useState(false)
+
+  const handlePointerDown = () => setIsPressed(true)
+  const handlePointerUp = () => setIsPressed(false)
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -110,16 +113,16 @@ function SortableItem({
       {...attributes}
       {...listeners}
       key={task?._id}
-      className={
-        isDragging
-          ? 'bg-gray-200 p-2 mb-2 rounded shadow  text-white-600 flex'
-          : 'bg-primary p-2 mb-2 rounded shadow  flex flex-col gap-3 text-gray-200'
-      }
+      className={`p-2 mb-2 rounded shadow flex flex-col gap-3 
+        transition-colors duration-200
+        ${isDragging ? 'bg-gray-200 text-white' : 
+          isPressed ? 'bg-primary/70 text-gray-100' : 'bg-primary text-gray-200'}
+      `}
     >
       <div className="flex">
         {/* Task */}
         <Dialog>
-          <DialogTrigger className='self-start w-full flex flex-col gap-3 p-2'>
+          <DialogTrigger className='self-start w-full flex flex-col gap-3 p-2 hover:cursor-pointer'>
             <div className='flex flex-col gap-3'>
               <div className="flex justify-between">
                 <h3 className='font-bold text-xl text-start'>{task?.title}</h3>

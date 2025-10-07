@@ -23,7 +23,7 @@ export default function Home() {
     return (
       <>
         <Navbar />
-        <div className="flex justify-center h-screen bg-[#2a2a2a]">
+        <div className="flex justify-center h-screen max-md:h-full bg-[#2a2a2a]">
           <div className="flex flex-col gap-4">
             <TableStacks isLoading />
           </div>
@@ -37,7 +37,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <div className="flex justify-center h-screen bg-[#2a2a2a]">
+      <div className="flex justify-center h-screen max-md:h-full bg-[#2a2a2a]">
         <div className="flex flex-col gap-4">
           <TableStacks isLoading={false} />
         </div>
