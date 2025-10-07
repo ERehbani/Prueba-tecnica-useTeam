@@ -1,10 +1,10 @@
 "use client";
-import Navbar from "@/components/Navbar";
-import TableStacks from "@/components/TableStacks";
-import { useSession } from "@/hooks/useSession";
+import Navbar from "@/app/widgets/Navbar/Navbar";
+import TableStacks from "@/app/features/kanban/TableStacks";
+import { useSession } from "@/app/features/auth/hooks/useSession";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { userStore } from "@/store/userStore";
+import { userStore } from "@/app/features/auth/store/userStore";
 
 export default function Home() {
   const { data, isLoading } = useSession();
