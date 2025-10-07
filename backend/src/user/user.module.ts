@@ -9,6 +9,7 @@ import { User, UserSchema } from 'src/user/schemas/user.schema'
 import { JwtStrategy } from 'src/kanban/lib/jwt.strategy'
 import { LocalStrategy } from 'src/kanban/lib/local.strategy'
 import { ConfigModule } from '@nestjs/config'
+import {SessionModule} from 'src/session/session.module'
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ConfigModule } from '@nestjs/config'
       isGlobal: true,
     }),
     PassportModule,
+    SessionModule,
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,

@@ -1,41 +1,48 @@
 "use client";
 import Navbar from "@/components/Navbar";
 import TableStacks from "@/components/TableStacks";
-import { Spinner } from "@/components/ui/spinner";
 import { useSession } from "@/hooks/useSession";
-import { redirect } from "next/navigation";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { userStore } from "@/store/userStore";
 
 export default function Home() {
   const { data, isLoading } = useSession();
+  const { setUser } = userStore()
+  const router = useRouter();
 
-  if (isLoading) return (
-    <>
+  console.log(data)
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (!data?.authenticated) router.replace("/auth");
+    setUser(data?.user)
+  }, [data, isLoading, router]);
+
+  if (isLoading) {
+    return (
       <>
         <Navbar />
         <div className="flex justify-center h-screen bg-[#2a2a2a]">
           <div className="flex flex-col gap-4">
-            <TableStacks isLoading={isLoading} />
+            {/* spinner/skeleton si querés */}
+            <TableStacks isLoading />
           </div>
         </div>
       </>
+    );
+  }
 
-    </>
-  )
-
-  if (!data?.authenticated) return redirect("/auth");
-
+  if (!data?.authenticated) return null; // se está redirigiendo
 
   return (
     <>
-      <>
-        <Navbar />
-        <div className="flex justify-center h-screen bg-[#2a2a2a]">
-          <div className="flex flex-col gap-4">
-            <TableStacks isLoading={isLoading} />
-          </div>
+      <Navbar />
+      <div className="flex justify-center h-screen bg-[#2a2a2a]">
+        <div className="flex flex-col gap-4">
+          <TableStacks isLoading={false} />
         </div>
-      </>
-
+      </div>
     </>
   );
 }

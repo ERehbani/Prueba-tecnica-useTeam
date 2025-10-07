@@ -10,6 +10,7 @@ const fetchTasks = () => {
 
 const deleteTask = async (taskId: string | undefined) => {
   const { data } = await axios.delete(`/api/tasks/${taskId}`)
+
   if (data.error) throw new Error(data.error)
   return data
 }

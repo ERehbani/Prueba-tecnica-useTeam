@@ -85,6 +85,7 @@ export class KanbanService {
 
   async createTask (taskData: CreateKanbanDto) {
     const task = new this.taskModel(taskData)
+    console.log(task)
     return await task.save()
   }
 

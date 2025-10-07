@@ -2,8 +2,8 @@ import axios from 'axios'
 
 export async function GET (request: Request) {
   try {
-    const data = await axios.get(`${process.env.API_BACKEND}/kanban`)
-    console.log(JSON.stringify(data.data))
+    const data = await axios.get(`${process.env.NEXT_PUBLIC_API_BACKEND}/kanban`)
+   
     return new Response(JSON.stringify(data.data))
   } catch (error) {
     console.log(error)

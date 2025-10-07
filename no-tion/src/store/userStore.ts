@@ -12,6 +12,7 @@ export const userStore = create<UserStore>(set => {
   const isLogged = false
 
   const user: User = {
+    _id: '',
     email: '',
     access_token: ''
   }

@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { redirect, useRouter } from 'next/navigation';
 import { Spinner } from '@/components/ui/spinner';
 import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 const Auth = () => {
     const [email, setEmail] = useState("");
@@ -20,7 +21,10 @@ const Auth = () => {
 
     const onSuccessRegister = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        return register({ email, password }, { onSuccess: () => setTab('login') })
+        return register({ email, password }, { onSuccess: () => {
+            setTab('login')
+            toast("Usuario creado exitosamente")
+        } })
     }
 
     const onSuccessLogin = (e: React.FormEvent<HTMLFormElement>) => {

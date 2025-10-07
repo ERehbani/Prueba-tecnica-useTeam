@@ -5,13 +5,13 @@ export async function DELETE (
   _req: Request,
   { params }: { params: { id: string } }
 ) {
-  const { id } = params
+  const { id } = await params
   if (!id) {
     return NextResponse.json({ error: 'Missing id' }, { status: 400 })
   }
 
   try {
-    const res = await axios.delete(`${process.env.API_BACKEND}/kanban/${id}`)
+    const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_BACKEND}/kanban/${id}`)
 
     const data = await res.data
 

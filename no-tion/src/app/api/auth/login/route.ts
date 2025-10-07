@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 export async function POST (request: Request) {
   try {
     const body = await request.json()
-    const response = await fetch(`${process.env.API_BACKEND}/user/login`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BACKEND}/user/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
@@ -13,7 +13,6 @@ export async function POST (request: Request) {
       return NextResponse.json({ error: text }, { status: response.status })
     }
     const data = await response.json()
-
     const token: string | undefined = data?.access_token
 
     if (!token) {

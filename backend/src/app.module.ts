@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
+import { SessionModule } from './session/session.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -15,7 +16,7 @@ import { UserModule } from './user/user.module';
         uri: config.get<string>('MONGODB_URI'),
       }),
       inject: [ConfigService],
-    }), KanbanModule, UserModule],
+    }), KanbanModule, UserModule, SessionModule],
   controllers: [AppController],
   providers: [AppService],
 })

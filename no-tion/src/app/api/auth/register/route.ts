@@ -3,7 +3,7 @@ export async function POST(request: Request) {
     try {
         const body = await request.json();
 
-        const res = await fetch(`${process.env.API_BACKEND}/user/register`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BACKEND}/user/register`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),

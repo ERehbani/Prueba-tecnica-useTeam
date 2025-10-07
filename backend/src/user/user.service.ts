@@ -4,15 +4,17 @@ import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { InjectModel } from '@nestjs/mongoose'
 import { User, UserDocument } from './schemas/user.schema'
-import { Model, StringSchemaDefinition } from 'mongoose'
+import { Model, StringSchemaDefinition, Types } from 'mongoose'
 import * as bcrypt from 'bcrypt'
 import { JwtService } from '@nestjs/jwt'
+import { SessionService } from 'src/session/session.service'
 
 @Injectable()
 export class UserService {
   constructor (
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private jwtService: JwtService,
+    private sessionService: SessionService
   ) {}
 
   async create (createUserDto: CreateUserDto) {
@@ -43,7 +45,7 @@ export class UserService {
     return null
   }
 
-  async login(email: string, password: string) {
+  async login(email: string, password: string, ua: string | undefined, ip: string | undefined) {
     const user = await this.userModel.findOne({ email });
     if (!user) throw new UnauthorizedException('Credenciales inválidas');
   
@@ -54,12 +56,27 @@ export class UserService {
     const payload = { email: user.email, sub: user._id };
   
     const token = this.jwtService.sign(payload);
+
+    const decoded: any = this.jwtService.decode(token);
+    const expMs = decoded?.exp ? decoded.exp * 1000 : undefined;
+    const expiresAt = expMs ? new Date(expMs) : undefined;
+
+    await this.sessionService.create({
+      userId: user._id as Types.ObjectId,
+      token,
+      userAgent: ua,
+      ip,
+      expiresAt
+    })
   
     return {
       access_token: token,
       user: {
         _id: user._id,
         email: user.email,
+        ua,
+        ip,
+        expiresAt
       },
     };
   }
